@@ -61,10 +61,10 @@ class GaussiansUpsampler(nn.Module):
         super().__init__()
         self.config = config
 
-        # scale and opacity initialization
-        self.scaling_bias = self.config.model.get("scaling_bias", -2.3)
+        # scale and opacity initialization (trainable parameters)
+        self.scaling_bias = nn.Parameter(torch.tensor(self.config.model.get("scaling_bias", -2.3)))
         self.scaling_max = self.config.model.get("scaling_max", -1.2)
-        self.opacity_bias = self.config.model.get("opacity_bias", -2.0)
+        self.opacity_bias = nn.Parameter(torch.tensor(self.config.model.get("opacity_bias", -2.0)))
 
         """
         xyz : torch.tensor of shape (n_gaussians, 3)
